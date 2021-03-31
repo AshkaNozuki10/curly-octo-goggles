@@ -6,18 +6,16 @@
 #define A5 19
 
 
-
 const int analogInPin0 = A0; //odd numbers trigpin(Pin0,Pin2,Pin4)
 const int analogInPin1 = A1; //even numbers echopin (Pin1,Pin3,Pin6)
 const int analogInPin2 = A2;
 const int analogInPin3 = A3;
 const int analogInPin4 = A4;
 const int analogInPin5 = A5;
-// define variables
+// ultrasonic sensors
 
 int green = 2;
 int red = 4;
-
 // LED pinIn
 
 long duration;
@@ -38,7 +36,7 @@ Serial.begin(9600);
 }
 
 void loop() {
-
+// the if statement is the sensor range limit
 if ((distance < 50)&&(distance > 0))
     {
       digitalWrite(green,HIGH);
@@ -49,7 +47,7 @@ if ((distance < 50)&&(distance > 0))
       digitalWrite(green,LOW);
       digitalWrite(red, HIGH);
     }
- 
+//sensor1
 delayMicroseconds(10);
 // Clears the trigPin
 digitalWrite(analogInPin0,LOW);
@@ -73,6 +71,43 @@ if ((distance < 50)&&(distance > 0))
       digitalWrite(green,LOW);
       digitalWrite(red, HIGH);
     }
+//2nd sensor
+delayMicroseconds(10);
+// Clears the trigPin
+digitalWrite(analogInPin2,LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(analogInPin2,HIGH);
+delayMicroseconds(10);
+digitalWrite(analogInPin2,LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(analogInPin3, HIGH);
+// Distance equation
+distance= duration*0.034/2;
+
+if ((distance < 50)&&(distance > 0))
+    {
+      digitalWrite(green,HIGH);
+      digitalWrite(red, LOW);
+    }
+    else if((distance > 51)&&(distance < 150)){
+    
+      digitalWrite(green,LOW);
+      digitalWrite(red, HIGH);
+    }
+//3rd sensor
+delayMicroseconds(10);
+// Clears the trigPin
+digitalWrite(analogInPin4,LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(analogInPin4,HIGH);
+delayMicroseconds(10);
+digitalWrite(analogInPin4,LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(analogInPin5, HIGH);
+// Distance equation
+distance= duration*0.034/2;
     
 Serial.println(distance);            // prints the value of the sensor to the serial monitor
   delay(100);                   // wait for this much time before printing next value
